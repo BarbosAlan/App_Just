@@ -21,7 +21,9 @@ st.set_page_config(
 
 TARGET_PAYOUT = "PAGAMENTO DE PAY OUT - PARCEIRO"
 TARGET_PAYIN  = "RECEBIMENTO DE PAY IN DE PARCEIRO"
-TARGETS       = [TARGET_PAYOUT, TARGET_PAYIN]
+TARGET_BLOQUEIO = "BLOQUEIO - DEPOSITO JUDICIAL"
+TARGET_DESBLOQUEIO = "DESBLOQUEIO JUDICIAL"
+TARGETS = [TARGET_PAYOUT, TARGET_PAYIN, TARGET_BLOQUEIO, TARGET_DESBLOQUEIO]
 
 
 def formatar_excel(df_final):
@@ -34,6 +36,8 @@ def formatar_excel(df_final):
     header_fill  = PatternFill("solid", start_color="1F4E79")
     payin_fill   = PatternFill("solid", start_color="E2EFDA")
     payout_fill  = PatternFill("solid", start_color="FDECEA")
+    bloqueio_fill = PatternFill("solid", start_color="FFF2CC")
+    desbloqueio_fill = PatternFill("solid", start_color="D9E2F3")
     border       = Border(
         left=Side(style="thin"), right=Side(style="thin"),
         top=Side(style="thin"),  bottom=Side(style="thin")
@@ -62,6 +66,10 @@ def formatar_excel(df_final):
             fill = payin_fill
         elif hist == TARGET_PAYOUT:
             fill = payout_fill
+        elif hist == TARGET_BLOQUEIO:
+            fill = bloqueio_fill
+        elif hist == TARGET_DESBLOQUEIO:
+            fill = desbloqueio_fill
         else:
             fill = None
 
