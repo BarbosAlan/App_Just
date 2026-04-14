@@ -4,4 +4,3 @@ __pycache__/
 venv/
 *.xlsx
 .trash/
-.cursor/mcp.json

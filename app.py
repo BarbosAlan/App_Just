@@ -45,38 +45,90 @@ DESIGN_TOKENS = """
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
         :root {
-            /* Stitch / Equity Foundry palette (from stitch/equity_foundry/DESIGN.md) */
-            --primary: #003b5a;
-            --primary-container: #1a5276;
-            --secondary: #006b58;
-            --tertiary: #4d3100;
-            --error: #ba1a1a;
+            /* ===== Paleta Principal - Azul ===== */
+            --blue-950: #0a1628;
+            --blue-900: #0f1f3a;
+            --blue-800: #162d50;
+            --blue-700: #1e3a5f;
+            --blue-600: #2563eb;
+            --blue-500: #3b82f6;
+            --blue-400: #60a5fa;
+            --blue-300: #93c5fd;
+            --blue-200: #bfdbfe;
+            --blue-100: #dbeafe;
+            --blue-50: #eff6ff;
 
-            /* Surfaces */
-            --background: #fcf8fb;
-            --surface: #fcf8fb;
-            --surface-container-low: #f6f3f5;
-            --surface-container-lowest: #ffffff;
-            --surface-container-high: #eae7ea;
-            --outline: #72787f;
-            --outline-variant: #c1c7cf;
+            /* ===== Paleta Secundária - Verde ===== */
+            --green-900: #052e16;
+            --green-800: #064e24;
+            --green-700: #065f2e;
+            --green-600: #16a34a;
+            --green-500: #22c55e;
+            --green-400: #4ade80;
+            --green-300: #86efac;
+            --green-200: #bbf7d0;
+            --green-100: #dcfce7;
+            --green-50: #f0fdf4;
 
-            /* Text */
-            --on-surface: #1b1b1d;
-            --on-surface-variant: #41474e;
+            /* ===== Paleta Destaque - Dourado ===== */
+            --gold-900: #451a03;
+            --gold-800: #78350f;
+            --gold-700: #92400e;
+            --gold-600: #b45309;
+            --gold-500: #d97706;
+            --gold-400: #f59e0b;
+            --gold-300: #fbbf24;
+            --gold-200: #fcd34d;
+            --gold-100: #fef3c7;
+            --gold-50: #fffbeb;
 
-            /* Radius */
+            /* ===== Neutros ===== */
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-500: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-300: #d1d5db;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
+            --gray-50: #f9fafb;
+            --white: #ffffff;
+
+            /* Cores de Uso */
+            --primary: var(--blue-600);
+            --primary-dark: var(--blue-700);
+            --primary-light: var(--blue-400);
+            --secondary: var(--green-600);
+            --secondary-dark: var(--green-700);
+            --secondary-light: var(--green-400);
+            --accent: var(--gold-500);
+
+            --success: var(--green-600);
+            --warning: var(--gold-500);
+            --danger: #dc2626;
+
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-50);
+
+            /* Sombras */
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
+
+            /* Bordas */
             --radius-sm: 6px;
             --radius: 10px;
             --radius-lg: 16px;
             --radius-xl: 24px;
             --radius-full: 9999px;
 
-            /* Shadows (use sparingly) */
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-md: 0 10px 32px rgba(0,0,0,0.08);
-
-            /* Transitions */
+            /* Transições */
             --transition-fast: 150ms ease;
             --transition: 250ms ease;
         }
@@ -85,206 +137,288 @@ DESIGN_TOKENS = """
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
-        html, body {
-            background: var(--background) !important;
-            color: var(--on-surface) !important;
+        /* Tabelas */
+        .stDataFrame, .stDataFrame div, table {
+            border: none !important;
         }
 
-        /* Hide Streamlit chrome */
-        #MainMenu, footer, header {visibility: hidden;}
+        th {
+            border-bottom: 2px solid var(--gray-200) !important;
+            background: var(--gray-50) !important;
+        }
 
-        /* Header */
+        td {
+            border-bottom: 1px solid var(--gray-100) !important;
+        }
+
+        /* HEADER */
         .app-header {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(18px);
-            padding: 1rem 1.25rem;
-            border-radius: var(--radius-xl);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1rem 2rem;
             box-shadow: var(--shadow-sm);
-            margin: 0 0 1.25rem 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
         }
 
         .app-header-brand {
             display: flex;
             align-items: center;
-            gap: 0.85rem;
+            gap: 1rem;
         }
 
         .app-header-icon {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(145deg, var(--primary), var(--primary-container));
-            border-radius: 14px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.15rem;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-sm);
         }
 
         .app-header-title {
-            font-size: 1.125rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            letter-spacing: -0.3px;
             color: var(--primary);
             margin: 0;
-            line-height: 1.15;
+            letter-spacing: -0.5px;
         }
 
         .app-header-subtitle {
             font-size: 0.8rem;
-            color: var(--on-surface-variant);
+            color: var(--text-secondary);
             font-weight: 500;
-            margin: 0.2rem 0 0 0;
+            margin: 0;
         }
 
-        /* Sections (no hard borders; surface transitions only) */
-        .section {
-            background: linear-gradient(180deg, var(--surface-container-low) 0%, #f2eff1 100%);
-            border-radius: var(--radius-xl);
-            padding: 1.75rem;
-            margin-bottom: 1.5rem;
+        /* NAVEGAÇÃO */
+        .nav-bar {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--gray-50);
+            padding: 0.5rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
         }
 
-        .section-title {
-            font-size: 1rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+        .nav-item {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-full);
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            flex: 1;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-item:hover {
+            background: var(--white);
             color: var(--primary);
-            margin: 0 0 1rem 0;
         }
 
-        /* Cards */
+        .nav-item.active {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
+            font-weight: 600;
+        }
+
+        .nav-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* CARDS */
         .card {
-            background: var(--surface-container-lowest);
+            background: var(--white);
+            border: 1px solid var(--gray-200);
             border-radius: var(--radius-lg);
-            padding: 1.25rem 1.25rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
             position: relative;
             overflow: hidden;
         }
 
-        .card-signature::before {
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--green-500));
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-8px);
+            border-color: var(--gray-300);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* SIGNATURE STYLE - Barra lateral */
+        .card-signature::after {
             content: '';
             position: absolute;
             left: 0;
             top: 0;
-            bottom: 0;
+            height: 100%;
             width: 4px;
-            background: var(--primary);
+            background: linear-gradient(180deg, var(--primary), var(--primary-light));
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
         }
 
-        .card-signature.success::before { background: var(--secondary); }
-        .card-signature.warning::before { background: var(--tertiary); }
-        .card-signature.error::before { background: var(--error); }
+        .card-signature.success::after {
+            background: linear-gradient(180deg, var(--green-600), var(--green-400));
+        }
 
-        .card-label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--outline);
-            margin-top: 0.35rem;
+        .card-signature.warning::after {
+            background: linear-gradient(180deg, var(--gold-500), var(--gold-300));
+        }
+
+        .card-signature.error::after {
+            background: linear-gradient(180deg, var(--danger), #ef4444);
         }
 
         .card-number {
-            font-size: 1.85rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            color: var(--primary);
-            font-variant-numeric: tabular-nums;
-            margin: 0;
-            line-height: 1.1;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--primary), var(--green-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* Upload zone (glass) */
-        .upload-zone {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(24px);
-            border: 0.5px dashed rgba(193,199,207,0.9);
+        .card-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* SEÇÕES */
+        .section {
+            background: linear-gradient(180deg, var(--gray-50) 0%, var(--gray-100) 100%);
             border-radius: var(--radius-xl);
-            padding: 2.25rem 1.75rem;
-            text-align: center;
-            transition: all var(--transition);
-        }
-        .upload-zone:hover {
-            border-color: var(--primary);
-            background: rgba(203,230,255,0.14);
-            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
         }
 
-        /* Buttons */
-        .stButton > button {
-            background: linear-gradient(145deg, var(--primary), var(--primary-container)) !important;
-            color: #fff !important;
-            border: none !important;
-            border-radius: 14px !important;
-            padding: 0.9rem 1.25rem !important;
-            font-weight: 700 !important;
-            letter-spacing: 0.10em !important;
-            text-transform: uppercase !important;
-            transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast) !important;
-            box-shadow: 0 10px 22px rgba(0, 59, 90, 0.18) !important;
-        }
-        .stButton > button:hover { transform: translateY(-1px) !important; }
-        .stButton > button:disabled { opacity: 0.55 !important; }
-
-        /* Success banner */
-        .banner {
-            background: rgba(0, 107, 88, 0.10);
-            border: 1px solid rgba(0, 107, 88, 0.18);
-            border-radius: var(--radius-lg);
-            padding: 0.85rem 1rem;
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-        }
-        .banner-dot {
-            width: 22px;
-            height: 22px;
-            border-radius: 999px;
-            background: var(--secondary);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 0.85rem;
+            letter-spacing: -0.3px;
         }
 
-        /* Divider (ghost) */
+        /* UPLOAD BOX */
+        .upload-zone {
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius-lg);
+            padding: 3rem 2rem;
+            text-align: center;
+            background: var(--white);
+            transition: all var(--transition);
+        }
+
+        .upload-zone:hover {
+            border-color: var(--primary);
+            background: var(--blue-50);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* BOTÕES Streamlit */
+        .stButton > button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+            color: var(--white) !important;
+            border: none !important;
+            border-radius: var(--radius-full) !important;
+            padding: 0.875rem 2rem !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            transition: all var(--transition) !important;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
+        }
+
+        .stButton > button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5) !important;
+        }
+
+        .stButton > button:disabled {
+            opacity: 0.5 !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+        }
+
+        /* STATUS BADGE */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+        }
+
+        .status-badge.success {
+            color: var(--success);
+            background: var(--green-50);
+            border-color: var(--green-200);
+        }
+
+        /* DIVIDER */
         .divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(193,199,207,0.45), transparent);
-            margin: 1.25rem 0;
+            background: linear-gradient(90deg, transparent, var(--gray-300), transparent);
+            margin: 2rem 0;
         }
 
-        /* Dataframe: softer */
-        .stDataFrame, .stDataFrame div, table { border: none !important; }
-        thead tr th {
-            background: var(--surface-container-high) !important;
-            font-size: 0.72rem !important;
-            letter-spacing: 0.14em !important;
-            text-transform: uppercase !important;
-            color: var(--on-surface-variant) !important;
-        }
-        tbody tr:nth-child(even) td { background: var(--surface-container-low) !important; }
-        tbody tr:nth-child(odd) td { background: var(--surface-container-lowest) !important; }
-
-        /* Footer */
+        /* FOOTER */
         .app-footer {
             text-align: center;
-            padding: 1.5rem 0 0.75rem 0;
-            color: var(--outline);
+            padding: 2rem 0;
+            color: var(--text-muted);
             font-size: 0.8rem;
         }
 
+        /* Esconder Streamlit UI */
+        #MainMenu, footer, header {visibility: hidden;}
+
+        /* Responsividade */
         @media (max-width: 768px) {
-            .section { padding: 1.25rem; }
-            .card-number { font-size: 1.6rem; }
+            .app-header { flex-direction: column; gap: 1rem; padding: 1rem; }
+            .nav-bar { flex-direction: column; }
+            .nav-item { padding: 0.75rem 1rem; }
+            .card-number { font-size: 2rem; }
         }
     </style>
 """
@@ -445,13 +579,6 @@ if "stats" not in st.session_state:
     st.session_state.stats = None
 if "processing_done" not in st.session_state:
     st.session_state.processing_done = False
-if "uploader_key" not in st.session_state:
-    st.session_state.uploader_key = 0
-
-
-def _reset_uploader():
-    st.session_state.uploaded_file = None
-    st.session_state.uploader_key += 1
 
 # ============================================================
 # RENDERIZAÇÃO
@@ -465,8 +592,8 @@ st.markdown("""
         <div class="app-header-brand">
             <div class="app-header-icon">💎</div>
             <div>
-                <p class="app-header-title">Tratador de Extrato Genial</p>
-                <p class="app-header-subtitle">Tratamento automatizado para importação contábil</p>
+                <p class="app-header-title">Extrato Genial</p>
+                <p class="app-header-subtitle">Processamento Inteligente</p>
             </div>
         </div>
     </div>
@@ -491,7 +618,7 @@ with col_nav3:
 
 if st.session_state.current_page == "dashboard":
     st.markdown('<div class="section">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Visão geral</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"><span class="section-title-icon">📈</span> Visão Geral</div>', unsafe_allow_html=True)
 
     if st.session_state.processing_done and st.session_state.stats:
         stats = st.session_state.stats
@@ -513,7 +640,9 @@ if st.session_state.current_page == "dashboard":
     with col2:
         st.markdown(f"""
             <div class="card card-signature success">
-                <div class="card-number">{f"R$ {stats['total_payin']:,.0f}" if has_real_data and stats['total_payin'] > 0 else "—"}</div>
+                <div class="card-number" style="font-size: 1.8rem;">
+                    {f"R$ {stats['total_payin']:,.0f}" if has_real_data and stats['total_payin'] > 0 else "—"}
+                </div>
                 <div class="card-label">Pay In</div>
             </div>
         """, unsafe_allow_html=True)
@@ -521,15 +650,20 @@ if st.session_state.current_page == "dashboard":
     with col3:
         st.markdown(f"""
             <div class="card card-signature error">
-                <div class="card-number">{f"R$ {abs(stats['total_payout']):,.0f}" if has_real_data and stats['total_payout'] < 0 else "—"}</div>
+                <div class="card-number" style="font-size: 1.8rem; background: linear-gradient(135deg, var(--danger), #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    {f"R$ {abs(stats['total_payout']):,.0f}" if has_real_data and stats['total_payout'] < 0 else "—"}
+                </div>
                 <div class="card-label">Pay Out</div>
             </div>
         """, unsafe_allow_html=True)
 
     with col4:
+        saldo_color = "var(--green-600)" if stats.get('saldo', 0) >= 0 else "var(--danger)"
         st.markdown(f"""
             <div class="card card-signature {'success' if stats.get('saldo', 0) >= 0 else 'error'}">
-                <div class="card-number">{f"R$ {stats['saldo']:,.0f}" if has_real_data else "—"}</div>
+                <div class="card-number" style="font-size: 1.8rem; background: linear-gradient(135deg, {saldo_color}, {saldo_color}); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    {f"R$ {stats['saldo']:,.0f}" if has_real_data else "—"}
+                </div>
                 <div class="card-label">Saldo</div>
             </div>
         """, unsafe_allow_html=True)
@@ -538,7 +672,7 @@ if st.session_state.current_page == "dashboard":
         st.info("💡 **Nenhum dado ainda.** Vá para **Processamento** para fazer upload do extrato.")
 
     st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Como funciona</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"><span class="section-title-icon">ℹ️</span> Como Funciona</div>', unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -556,7 +690,7 @@ if st.session_state.current_page == "dashboard":
 
 elif st.session_state.current_page == "processamento":
     st.markdown('<div class="section">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Processamento</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"><span class="section-title-icon">⚡</span> Processamento de Extrato</div>', unsafe_allow_html=True)
 
     if not st.session_state.processing_done:
         # Estado 1: Upload
@@ -565,93 +699,21 @@ elif st.session_state.current_page == "processamento":
             "Selecione o arquivo Excel (.xlsx)",
             type=["xlsx"],
             help="Colunas: Data, HISTORICO, Valor, HISTORICO DE LANÇAMENTO",
-            label_visibility="collapsed",
-            key=f"uploader_{st.session_state.uploader_key}",
+            label_visibility="collapsed"
         )
         st.markdown('</div>', unsafe_allow_html=True)
 
         if uploaded_file:
             st.session_state.uploaded_file = uploaded_file
-
-        if st.session_state.uploaded_file is not None:
-            f = st.session_state.uploaded_file
-            size_mb = None
-            try:
-                size_mb = (getattr(f, "size", None) or 0) / (1024 * 1024)
-            except Exception:
-                size_mb = None
-
-            left, right = st.columns([10, 2])
-            with left:
-                st.markdown(
-                    f"""
-                    <div class="card card-signature success" style="display:flex; align-items:center; justify-content:space-between; gap:1rem;">
-                        <div>
-                            <div style="font-weight:800; color: var(--on-surface); font-size:0.95rem;">{f.name}</div>
-                            <div class="card-label" style="margin-top:0.4rem;">
-                                Planilha Excel{f" • {size_mb:.1f} MB" if size_mb and size_mb > 0 else ""}
-                            </div>
-                        </div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-            with right:
-                if st.button("✕", help="Remover arquivo", use_container_width=True):
-                    _reset_uploader()
-                    st.rerun()
-
-            st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
-
-        # Bento info grid (estilo do mock)
-        col_i1, col_i2, col_i3 = st.columns(3)
-        with col_i1:
-            st.markdown(
-                """
-                <div class="card">
-                    <div style="font-weight:800; color: var(--primary); letter-spacing:0.14em; text-transform:uppercase; font-size:0.72rem;">Privacidade</div>
-                    <div style="margin-top:0.5rem; color: var(--on-surface-variant); font-size:0.9rem;">
-                        Seus dados são processados localmente e nunca armazenados.
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        with col_i2:
-            st.markdown(
-                """
-                <div class="card">
-                    <div style="font-weight:800; color: var(--primary); letter-spacing:0.14em; text-transform:uppercase; font-size:0.72rem;">Velocidade</div>
-                    <div style="margin-top:0.5rem; color: var(--on-surface-variant); font-size:0.9rem;">
-                        Processamento de milhares de linhas em poucos segundos.
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-        with col_i3:
-            st.markdown(
-                """
-                <div class="card">
-                    <div style="font-weight:800; color: var(--primary); letter-spacing:0.14em; text-transform:uppercase; font-size:0.72rem;">Padronização</div>
-                    <div style="margin-top:0.5rem; color: var(--on-surface-variant); font-size:0.9rem;">
-                        Conversão automática para formatos contábeis aceitos.
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-        st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+            st.success(f"✅ Arquivo: **{uploaded_file.name}**")
 
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            can_process = st.session_state.uploaded_file is not None
-            processar_btn = st.button("⚡ PROCESSAR ARQUIVO", type="primary", disabled=not can_process, use_container_width=True)
+            processar_btn = st.button("⚡ PROCESSAR ARQUIVO", type="primary", disabled=uploaded_file is None, use_container_width=True)
 
-        if processar_btn and st.session_state.uploaded_file is not None:
+        if processar_btn and uploaded_file:
             with st.spinner("⏳ Processando..."):
-                df_final, stats, error, debug = processar_arquivo(st.session_state.uploaded_file)
+                df_final, stats, error, debug = processar_arquivo(uploaded_file)
 
             if error:
                 st.error(error)
@@ -669,19 +731,11 @@ elif st.session_state.current_page == "processamento":
         stats = st.session_state.stats
         df_final = st.session_state.df_final
 
-        st.markdown("""
-            <div class="banner">
-                <div class="banner-dot">✓</div>
-                <div>
-                    <div style="font-weight: 700; color: var(--secondary); font-size: 0.9rem;">Arquivo processado com sucesso</div>
-                    <div style="color: var(--on-surface-variant); font-size: 0.8rem;">O tratamento foi concluído seguindo as regras de agrupamento.</div>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="status-badge success">✅ Processamento concluído!</div>', unsafe_allow_html=True)
         st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
         # Cards de Estatística
-        st.markdown("### Resumo")
+        st.markdown("### 📊 Resumo")
 
         col1, col2, col3, col4 = st.columns(4)
         with col1:
@@ -706,7 +760,7 @@ elif st.session_state.current_page == "processamento":
         st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
         # Preview
-        st.markdown("### Pré-visualização")
+        st.markdown("### 👀 Pré-visualização")
         st.dataframe(df_final.head(20), use_container_width=True, hide_index=True)
         if len(df_final) > 20:
             st.caption(f"Mostrando 20 de {len(df_final)} linhas")
@@ -714,7 +768,7 @@ elif st.session_state.current_page == "processamento":
         st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
         # Download
-        st.markdown("### Download")
+        st.markdown("### 📥 Download")
         excel_output = formatar_excel(df_final)
         nome_arquivo = st.session_state.uploaded_file.name.replace(".xlsx", "_tratado.xlsx")
 
