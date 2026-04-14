@@ -55,7 +55,7 @@ Sua equipe acessará pelo seu IP: `http://SEU_IP:8501`
 ├── app.py                  # Aplicação web principal
 ├── requirements.txt        # Dependências do projeto
 ├── README.md               # Este arquivo
-└── script copy.py          # Script original (referência)
+└── legacy/                 # Pasta com scripts antigos (referência)
 ```
 
 ---

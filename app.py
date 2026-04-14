@@ -145,7 +145,7 @@ def processar_arquivo(uploaded_file):
         return df_final, stats
 
     except Exception as e:
-        st.error(f"❌ Erro ao processar arquivo: {str(e)}")
+        st.error("❌ Ocorreu um erro ao processar o arquivo. Verifique se o arquivo Excel está no formato correto e tente novamente.")
         return None, None
 
 
