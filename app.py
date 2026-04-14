@@ -1,6 +1,6 @@
 # ============================================================
-# APP WEB - EXTRATO GENIAL | "The Precise Curator"
-# Redesign - Identidade Visual Premium
+# APP WEB - EXTRATO GENIAL | Design Stitch
+# Redesign com paleta de cores do Stitch (Azul/Verde/Dourado)
 # Rodar com: streamlit run app.py
 # ============================================================
 
@@ -11,7 +11,6 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from io import BytesIO
 from datetime import date
-import random
 
 # ============================================================
 # CONSTANTES
@@ -28,96 +27,139 @@ TARGETS = [TARGET_PAYOUT, TARGET_PAYIN, TARGET_BLOQUEIO, TARGET_DESBLOQUEIO]
 # ============================================================
 
 st.set_page_config(
-    page_title="Extrato Genial — The Precise Curator",
+    page_title="Extrato Genial",
     page_icon="💎",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
 # ============================================================
-# SISTEMA DE DESIGN - "THE PRECISE CURATOR"
+# SISTEMA DE DESIGN - STITCH DESIGN SYSTEM
+# Paleta: Azul (#2563eb), Verde (#16a34a), Dourado (#d97706)
 # ============================================================
 
 DESIGN_TOKENS = """
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
         :root {
-            /* Paleta Primária */
-            --primary-foundation: #003b5a;
-            --primary-container: #1a5276;
-            --primary-light: #2E75B6;
+            /* ===== Paleta Principal - Azul ===== */
+            --blue-950: #0a1628;
+            --blue-900: #0f1f3a;
+            --blue-800: #162d50;
+            --blue-700: #1e3a5f;
+            --blue-600: #2563eb;
+            --blue-500: #3b82f6;
+            --blue-400: #60a5fa;
+            --blue-300: #93c5fd;
+            --blue-200: #bfdbfe;
+            --blue-100: #dbeafe;
+            --blue-50: #eff6ff;
 
-            /* Paleta Secundária */
-            --secondary: #006b58;
-            --secondary-light: #008c73;
+            /* ===== Paleta Secundária - Verde ===== */
+            --green-900: #052e16;
+            --green-800: #064e24;
+            --green-700: #065f2e;
+            --green-600: #16a34a;
+            --green-500: #22c55e;
+            --green-400: #4ade80;
+            --green-300: #86efac;
+            --green-200: #bbf7d0;
+            --green-100: #dcfce7;
+            --green-50: #f0fdf4;
 
-            /* Superfícies */
-            --surface-base: #fcf8fb;
-            --surface-section: #f6f3f5;
-            --surface-card: #ffffff;
+            /* ===== Paleta Destaque - Dourado ===== */
+            --gold-900: #451a03;
+            --gold-800: #78350f;
+            --gold-700: #92400e;
+            --gold-600: #b45309;
+            --gold-500: #d97706;
+            --gold-400: #f59e0b;
+            --gold-300: #fbbf24;
+            --gold-200: #fcd34d;
+            --gold-100: #fef3c7;
+            --gold-50: #fffbeb;
 
-            /* Texto */
-            --text-primary: #1a1a2e;
-            --text-secondary: #6b6b7b;
-            --text-muted: #9b9bab;
+            /* ===== Neutros ===== */
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-500: #6b7280;
+            --gray-400: #9ca3af;
+            --gray-300: #d1d5db;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
+            --gray-50: #f9fafb;
+            --white: #ffffff;
 
-            /* Estado */
-            --success: #006b58;
-            --error: #c0392b;
-            --warning: #f39c12;
+            /* Cores de Uso */
+            --primary: var(--blue-600);
+            --primary-dark: var(--blue-700);
+            --primary-light: var(--blue-400);
+            --secondary: var(--green-600);
+            --secondary-dark: var(--green-700);
+            --secondary-light: var(--green-400);
+            --accent: var(--gold-500);
+
+            --success: var(--green-600);
+            --warning: var(--gold-500);
+            --danger: #dc2626;
+
+            --text-primary: var(--gray-900);
+            --text-secondary: var(--gray-600);
+            --text-muted: var(--gray-500);
+            --bg-primary: var(--white);
+            --bg-secondary: var(--gray-50);
 
             /* Sombras */
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
 
             /* Bordas */
-            --radius-sm: 8px;
-            --radius-md: 12px;
+            --radius-sm: 6px;
+            --radius: 10px;
             --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-full: 9999px;
+
+            /* Transições */
+            --transition-fast: 150ms ease;
+            --transition: 250ms ease;
         }
 
         * {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
         }
 
-        /* Remover linhas de tabela padrão */
-        .stDataFrame, .stDataFrame div, .stDataFrame table {
-            border: none !important;
-        }
-
-        table {
-            border-collapse: collapse !important;
-        }
-
-        thead tr, tbody tr {
+        /* Tabelas */
+        .stDataFrame, .stDataFrame div, table {
             border: none !important;
         }
 
         th {
-            border-bottom: 2px solid #e8e8ec !important;
-            background: var(--surface-section) !important;
+            border-bottom: 2px solid var(--gray-200) !important;
+            background: var(--gray-50) !important;
         }
 
         td {
-            border-bottom: 1px solid #f0f0f4 !important;
-        }
-
-        /* Esconder bordas padrão do Streamlit */
-        .stTextInput > div > div, .stSelectbox > div > div {
-            border: none !important;
+            border-bottom: 1px solid var(--gray-100) !important;
         }
 
         /* HEADER */
         .app-header {
-            background: var(--surface-card);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-200);
             padding: 1rem 2rem;
             box-shadow: var(--shadow-sm);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-lg);
             margin-bottom: 2rem;
         }
 
@@ -130,26 +172,27 @@ DESIGN_TOKENS = """
         .app-header-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, var(--primary-foundation), var(--primary-light));
-            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
+            box-shadow: var(--shadow-sm);
         }
 
         .app-header-title {
             font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-foundation);
+            font-weight: 800;
+            color: var(--primary);
             margin: 0;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.5px;
         }
 
         .app-header-subtitle {
             font-size: 0.8rem;
             color: var(--text-secondary);
-            font-weight: 400;
+            font-weight: 500;
             margin: 0;
         }
 
@@ -157,33 +200,33 @@ DESIGN_TOKENS = """
         .nav-bar {
             display: flex;
             gap: 0.5rem;
-            background: var(--surface-section);
+            background: var(--gray-50);
             padding: 0.5rem;
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-full);
             margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
         }
 
         .nav-item {
             padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all 0.2s ease;
+            border-radius: var(--radius-full);
             font-weight: 500;
             font-size: 0.9rem;
             color: var(--text-secondary);
             text-align: center;
             flex: 1;
+            transition: all var(--transition-fast);
         }
 
         .nav-item:hover {
-            background: var(--surface-card);
-            color: var(--text-primary);
+            background: var(--white);
+            color: var(--primary);
         }
 
         .nav-item.active {
-            background: var(--surface-card);
-            color: var(--primary-foundation);
-            box-shadow: var(--shadow-sm);
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: var(--shadow-md);
             font-weight: 600;
         }
 
@@ -194,135 +237,134 @@ DESIGN_TOKENS = """
 
         /* CARDS */
         .card {
-            background: var(--surface-card);
-            border-radius: var(--radius-md);
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
             padding: 1.5rem;
             box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
+            transition: all var(--transition);
             position: relative;
             overflow: hidden;
         }
 
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--green-500));
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
+
         .card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-8px);
+            border-color: var(--gray-300);
         }
 
-        /* SIGNATURE STYLE - Barra lateral de cor */
-        .card-signature {
-            border-left: none;
+        .card:hover::before {
+            opacity: 1;
         }
 
-        .card-signature::before {
+        /* SIGNATURE STYLE - Barra lateral */
+        .card-signature::after {
             content: '';
             position: absolute;
             left: 0;
             top: 0;
             height: 100%;
             width: 4px;
-            background: linear-gradient(180deg, var(--primary-foundation), var(--primary-light));
-            border-radius: 4px 0 0 4px;
+            background: linear-gradient(180deg, var(--primary), var(--primary-light));
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
         }
 
-        .card-signature.success::before {
-            background: linear-gradient(180deg, var(--secondary), var(--secondary-light));
+        .card-signature.success::after {
+            background: linear-gradient(180deg, var(--green-600), var(--green-400));
         }
 
-        .card-signature.warning::before {
-            background: linear-gradient(180deg, var(--warning), #f5b041);
+        .card-signature.warning::after {
+            background: linear-gradient(180deg, var(--gold-500), var(--gold-300));
         }
 
-        .card-signature.error::before {
-            background: linear-gradient(180deg, var(--error), #e74c3c);
+        .card-signature.error::after {
+            background: linear-gradient(180deg, var(--danger), #ef4444);
         }
 
         .card-number {
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--primary-foundation);
             line-height: 1;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.03em;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--primary), var(--green-600));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .card-label {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.5px;
         }
 
         /* SEÇÕES */
         .section {
-            background: var(--surface-section);
-            border-radius: var(--radius-lg);
+            background: linear-gradient(180deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            border-radius: var(--radius-xl);
             padding: 2rem;
             margin-bottom: 2rem;
+            border: 1px solid var(--gray-200);
         }
 
         .section-title {
             font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary-foundation);
+            font-weight: 800;
+            color: var(--text-primary);
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-        }
-
-        .section-title-icon {
-            font-size: 1.5rem;
+            letter-spacing: -0.3px;
         }
 
         /* UPLOAD BOX */
         .upload-zone {
-            border: 2px dashed var(--primary-light);
-            border-radius: var(--radius-md);
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius-lg);
             padding: 3rem 2rem;
             text-align: center;
-            background: var(--surface-card);
-            transition: all 0.3s ease;
+            background: var(--white);
+            transition: all var(--transition);
         }
 
         .upload-zone:hover {
-            border-color: var(--primary-foundation);
-            background: var(--surface-section);
+            border-color: var(--primary);
+            background: var(--blue-50);
+            box-shadow: var(--shadow-md);
         }
 
-        .upload-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .upload-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .upload-subtext {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        /* BOTÕES */
+        /* BOTÕES Streamlit */
         .stButton > button {
-            background: linear-gradient(135deg, var(--primary-foundation) 0%, var(--primary-container) 100%) !important;
-            color: white !important;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+            color: var(--white) !important;
             border: none !important;
-            border-radius: var(--radius-sm) !important;
+            border-radius: var(--radius-full) !important;
             padding: 0.875rem 2rem !important;
             font-size: 1rem !important;
             font-weight: 600 !important;
-            transition: all 0.3s ease !important;
-            box-shadow: var(--shadow-sm) !important;
+            transition: all var(--transition) !important;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4) !important;
         }
 
         .stButton > button:hover {
             transform: translateY(-2px) !important;
-            box-shadow: var(--shadow-md) !important;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5) !important;
         }
 
         .stButton > button:disabled {
@@ -331,33 +373,30 @@ DESIGN_TOKENS = """
             transform: none !important;
         }
 
-        /* STATUS */
+        /* STATUS BADGE */
         .status-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            border-radius: 2rem;
+            border-radius: var(--radius-full);
             font-size: 0.85rem;
             font-weight: 600;
-            background: var(--surface-card);
+            background: var(--white);
             box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
         }
 
         .status-badge.success {
             color: var(--success);
-            background: rgba(0, 107, 88, 0.1);
-        }
-
-        .status-badge.processing {
-            color: var(--warning);
-            background: rgba(243, 156, 18, 0.1);
+            background: var(--green-50);
+            border-color: var(--green-200);
         }
 
         /* DIVIDER */
         .divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, #e0e0e5, transparent);
+            background: linear-gradient(90deg, transparent, var(--gray-300), transparent);
             margin: 2rem 0;
         }
 
@@ -367,33 +406,17 @@ DESIGN_TOKENS = """
             padding: 2rem 0;
             color: var(--text-muted);
             font-size: 0.8rem;
-            font-weight: 400;
         }
 
-        /* ESconder elementos padrão do Streamlit */
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
+        /* Esconder Streamlit UI */
+        #MainMenu, footer, header {visibility: hidden;}
 
         /* Responsividade */
         @media (max-width: 768px) {
-            .app-header {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-
-            .nav-bar {
-                flex-direction: column;
-            }
-
-            .nav-item {
-                padding: 0.75rem 1rem;
-            }
-
-            .card-number {
-                font-size: 2rem;
-            }
+            .app-header { flex-direction: column; gap: 1rem; padding: 1rem; }
+            .nav-bar { flex-direction: column; }
+            .nav-item { padding: 0.75rem 1rem; }
+            .card-number { font-size: 2rem; }
         }
     </style>
 """
@@ -403,7 +426,7 @@ DESIGN_TOKENS = """
 # ============================================================
 
 def formatar_excel(df_final):
-    """Gera o arquivo Excel formatado igual ao script original."""
+    """Gera o arquivo Excel formatado."""
     wb = Workbook()
     ws = wb.active
     ws.title = "Extrato Tratado"
@@ -421,43 +444,43 @@ def formatar_excel(df_final):
     col_widths = [15, 45, 18, 45]
 
     for i, (h, w) in enumerate(zip(headers, col_widths), 1):
-        cell            = ws.cell(row=1, column=i, value=h)
-        cell.font       = header_font
-        cell.fill       = header_fill
-        cell.alignment  = center
-        cell.border     = border
+        cell = ws.cell(row=1, column=i, value=h)
+        cell.font = header_font
+        cell.fill = header_fill
+        cell.alignment = center
+        cell.border = border
         ws.column_dimensions[get_column_letter(i)].width = w
 
     ws.row_dimensions[1].height = 22
 
     for idx, row in df_final.iterrows():
-        r    = idx + 2
+        r = idx + 2
         hist = row["HISTORICO"]
 
-        dc                = ws.cell(row=r, column=1, value=row["Data"])
-        dc.number_format  = "DD/MM/YYYY"
-        dc.alignment      = center
-        dc.border         = border
+        dc = ws.cell(row=r, column=1, value=row["Data"])
+        dc.number_format = "DD/MM/YYYY"
+        dc.alignment = center
+        dc.border = border
 
-        hc           = ws.cell(row=r, column=2, value=hist)
+        hc = ws.cell(row=r, column=2, value=hist)
         hc.alignment = left_align
-        hc.border    = border
-        hc.font      = Font(name="Arial", size=10)
+        hc.border = border
+        hc.font = Font(name="Arial", size=10)
 
-        vc                = ws.cell(row=r, column=3, value=row["Valor"])
-        vc.number_format  = "#,##0.00"
-        vc.alignment      = center
-        vc.border         = border
+        vc = ws.cell(row=r, column=3, value=row["Valor"])
+        vc.number_format = "#,##0.00"
+        vc.alignment = center
+        vc.border = border
         if hist in TARGETS:
-            cor       = "C00000" if row["Valor"] < 0 else "375623"
-            vc.font   = Font(name="Arial", color=cor, size=10, bold=True)
+            cor = "C00000" if row["Valor"] < 0 else "375623"
+            vc.font = Font(name="Arial", color=cor, size=10, bold=True)
         else:
-            vc.font   = Font(name="Arial", size=10)
+            vc.font = Font(name="Arial", size=10)
 
-        hlc           = ws.cell(row=r, column=4, value=row["HISTORICO DE LANÇAMENTO"])
+        hlc = ws.cell(row=r, column=4, value=row["HISTORICO DE LANÇAMENTO"])
         hlc.alignment = left_align
-        hlc.border    = border
-        hlc.font      = Font(name="Arial", size=10)
+        hlc.border = border
+        hlc.font = Font(name="Arial", size=10)
 
     ws.freeze_panes = "A2"
 
@@ -468,21 +491,20 @@ def formatar_excel(df_final):
 
 
 def processar_arquivo(uploaded_file):
-    """Processa o arquivo Excel e retorna os resultados."""
+    """Processa o arquivo Excel."""
     try:
         df = pd.read_excel(uploaded_file)
 
-        # Valida colunas obrigatórias
         colunas_obrigatorias = ["Data", "HISTORICO", "Valor", "HISTORICO DE LANÇAMENTO"]
         colunas_faltando = [col for col in colunas_obrigatorias if col not in df.columns]
         if colunas_faltando:
-            return None, None, f"❌ Colunas faltando no arquivo: {', '.join(colunas_faltando)}"
+            return None, None, f"❌ Colunas faltando: {', '.join(colunas_faltando)}"
 
         df["HISTORICO"] = df["HISTORICO"].str.strip()
         df["Data"] = pd.to_datetime(df["Data"]).dt.date
 
         df_targets = df[df["HISTORICO"].isin(TARGETS)].copy()
-        df_others  = df[~df["HISTORICO"].isin(TARGETS)].copy()
+        df_others = df[~df["HISTORICO"].isin(TARGETS)].copy()
 
         grouped = df_targets.groupby(["Data", "HISTORICO"], sort=False)["Valor"].sum().reset_index()
         grouped["HISTORICO DE LANÇAMENTO"] = grouped["HISTORICO"]
@@ -491,7 +513,6 @@ def processar_arquivo(uploaded_file):
         df_final = pd.concat([df_others_clean, grouped], ignore_index=True)
         df_final = df_final.sort_values(["Data", "HISTORICO"]).reset_index(drop=True)
 
-        # Calcula métricas adicionais
         total_payin = df_final[df_final["HISTORICO"] == TARGET_PAYIN]["Valor"].sum()
         total_payout = df_final[df_final["HISTORICO"] == TARGET_PAYOUT]["Valor"].sum()
         saldo = total_payin + total_payout
@@ -509,7 +530,7 @@ def processar_arquivo(uploaded_file):
         return df_final, stats, None
 
     except Exception as e:
-        return None, None, "❌ Ocorreu um erro ao processar o arquivo. Verifique o formato e tente novamente."
+        return None, None, "❌ Erro ao processar o arquivo."
 
 
 # ============================================================
@@ -528,10 +549,9 @@ if "processing_done" not in st.session_state:
     st.session_state.processing_done = False
 
 # ============================================================
-# RENDERIZAÇÃO DA UI
+# RENDERIZAÇÃO
 # ============================================================
 
-# Injeta CSS do sistema de design
 st.markdown(DESIGN_TOKENS, unsafe_allow_html=True)
 
 # HEADER
@@ -541,31 +561,13 @@ st.markdown("""
             <div class="app-header-icon">💎</div>
             <div>
                 <p class="app-header-title">Extrato Genial</p>
-                <p class="app-header-subtitle">The Precise Curator</p>
+                <p class="app-header-subtitle">Processamento Inteligente</p>
             </div>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
 # NAVEGAÇÃO
-nav_items = [
-    {"id": "dashboard", "label": "📊 Dashboard", "disabled": False},
-    {"id": "processamento", "label": "⚡ Processamento", "disabled": False},
-    {"id": "historico", "label": "📁 Histórico", "disabled": True},
-]
-
-st.markdown('<div class="nav-bar">', unsafe_allow_html=True)
-for item in nav_items:
-    active_class = "active" if st.session_state.current_page == item["id"] else ""
-    disabled_class = "disabled" if item["disabled"] else ""
-    if item["disabled"]:
-        st.markdown(f'<div class="nav-item {disabled_class}">{item["label"]} <span style="font-size: 0.7rem;">(Em breve)</span></div>', unsafe_allow_html=True)
-    else:
-        if st.markdown(f'<div class="nav-item {active_class}" onclick="window.location.href=\'#{item["id"]}\'">{item["label"]}</div>', unsafe_allow_html=True):
-            st.session_state.current_page = item["id"]
-st.markdown('</div>', unsafe_allow_html=True)
-
-# Botões de navegação funcionais (Streamlit way)
 col_nav1, col_nav2, col_nav3 = st.columns(3)
 with col_nav1:
     if st.button("📊 Dashboard", use_container_width=True, type="primary" if st.session_state.current_page == "dashboard" else "secondary"):
@@ -576,37 +578,21 @@ with col_nav2:
         st.session_state.current_page = "processamento"
         st.rerun()
 with col_nav3:
-    if st.button("📁 Histórico", use_container_width=True, disabled=True, type="secondary"):
-        pass
+    st.button("📁 Histórico", use_container_width=True, disabled=True, type="secondary")
 
 # ============================================================
 # PÁGINA: DASHBOARD
 # ============================================================
 
 if st.session_state.current_page == "dashboard":
-    st.markdown("""
-        <div class="section">
-            <div class="section-title">
-                <span class="section-title-icon">📈</span>
-                Visão Geral
-            </div>
-    """, unsafe_allow_html=True)
+    st.markdown('<div class="section">', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"><span class="section-title-icon">📈</span> Visão Geral</div>', unsafe_allow_html=True)
 
-    # Stats simulados ou baseados em dados processados
     if st.session_state.processing_done and st.session_state.stats:
         stats = st.session_state.stats
         has_real_data = True
     else:
-        # Dados simulados para demonstração
-        stats = {
-            "linhas_originais": 0,
-            "outros_mantidos": 0,
-            "agrupados": 0,
-            "total_saida": 0,
-            "total_payin": 0,
-            "total_payout": 0,
-            "saldo": 0,
-        }
+        stats = {"total_saida": 0, "total_payin": 0, "total_payout": 0, "saldo": 0}
         has_real_data = False
 
     col1, col2, col3, col4 = st.columns(4)
@@ -615,72 +601,54 @@ if st.session_state.current_page == "dashboard":
         st.markdown(f"""
             <div class="card card-signature">
                 <div class="card-number">{stats['total_saida'] if has_real_data else "—"}</div>
-                <div class="card-label">Transações Processadas</div>
+                <div class="card-label">Transações</div>
             </div>
         """, unsafe_allow_html=True)
 
     with col2:
         st.markdown(f"""
             <div class="card card-signature success">
-                <div class="card-number" style="color: var(--secondary);">
-                    {f"R$ {stats['total_payin']:,.2f}" if has_real_data and stats['total_payin'] > 0 else "—"}
+                <div class="card-number" style="font-size: 1.8rem;">
+                    {f"R$ {stats['total_payin']:,.0f}" if has_real_data and stats['total_payin'] > 0 else "—"}
                 </div>
-                <div class="card-label">Total Pay In</div>
+                <div class="card-label">Pay In</div>
             </div>
         """, unsafe_allow_html=True)
 
     with col3:
         st.markdown(f"""
             <div class="card card-signature error">
-                <div class="card-number" style="color: var(--error);">
-                    {f"R$ {stats['total_payout']:,.2f}" if has_real_data and stats['total_payout'] > 0 else "—"}
+                <div class="card-number" style="font-size: 1.8rem; background: linear-gradient(135deg, var(--danger), #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    {f"R$ {abs(stats['total_payout']):,.0f}" if has_real_data and stats['total_payout'] < 0 else "—"}
                 </div>
-                <div class="card-label">Total Pay Out</div>
+                <div class="card-label">Pay Out</div>
             </div>
         """, unsafe_allow_html=True)
 
     with col4:
-        saldo_color = "var(--secondary)" if stats.get('saldo', 0) >= 0 else "var(--error)"
+        saldo_color = "var(--green-600)" if stats.get('saldo', 0) >= 0 else "var(--danger)"
         st.markdown(f"""
             <div class="card card-signature {'success' if stats.get('saldo', 0) >= 0 else 'error'}">
-                <div class="card-number" style="color: {saldo_color};">
-                    {f"R$ {stats['saldo']:,.2f}" if has_real_data else "—"}
+                <div class="card-number" style="font-size: 1.8rem; background: linear-gradient(135deg, {saldo_color}, {saldo_color}); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    {f"R$ {stats['saldo']:,.0f}" if has_real_data else "—"}
                 </div>
                 <div class="card-label">Saldo</div>
             </div>
         """, unsafe_allow_html=True)
 
     if not has_real_data:
-        st.info("💡 **Nenhum dado disponível ainda.** Vá para a aba **Processamento** para fazer upload do seu extrato e visualizar as estatísticas reais.")
+        st.info("💡 **Nenhum dado ainda.** Vá para **Processamento** para fazer upload do extrato.")
 
-    # Seção de informações adicionais
-    st.markdown("""
-        <div class="divider"></div>
-        <div class="section-title" style="margin-top: 2rem;">
-            <span class="section-title-icon">ℹ️</span>
-            Como Funciona
-        </div>
-    """, unsafe_allow_html=True)
+    st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"><span class="section-title-icon">ℹ️</span> Como Funciona</div>', unsafe_allow_html=True)
 
-    st.markdown("""
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
-            <div class="card">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">1️⃣</div>
-                <div style="font-weight: 600; margin-bottom: 0.5rem;">Upload</div>
-                <div style="color: var(--text-secondary); font-size: 0.9rem;">Faça upload do arquivo Excel (.xlsx) com seu extrato</div>
-            </div>
-            <div class="card">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">2️⃣</div>
-                <div style="font-weight: 600; margin-bottom: 0.5rem;">Processamento</div>
-                <div style="color: var(--text-secondary); font-size: 0.9rem;">Agrupamos PAY IN e PAY OUT por dia automaticamente</div>
-            </div>
-            <div class="card">
-                <div style="font-size: 2rem; margin-bottom: 0.5rem;">3️⃣</div>
-                <div style="font-weight: 600; margin-bottom: 0.5rem;">Download</div>
-                <div style="color: var(--text-secondary); font-size: 0.9rem;">Baixe o arquivo tratado e formatado com cores e bordas</div>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown('<div class="card"><div style="font-size: 2rem; margin-bottom: 0.5rem;">1️⃣</div><div style="font-weight: 700; margin-bottom: 0.5rem;">Upload</div><div style="color: var(--text-secondary); font-size: 0.9rem;">Faça upload do arquivo Excel (.xlsx)</div></div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown('<div class="card"><div style="font-size: 2rem; margin-bottom: 0.5rem;">2️⃣</div><div style="font-weight: 700; margin-bottom: 0.5rem;">Processamento</div><div style="color: var(--text-secondary); font-size: 0.9rem;">Agrupamos PAY IN e PAY OUT automaticamente</div></div>', unsafe_allow_html=True)
+    with col3:
+        st.markdown('<div class="card"><div style="font-size: 2rem; margin-bottom: 0.5rem;">3️⃣</div><div style="font-weight: 700; margin-bottom: 0.5rem;">Download</div><div style="color: var(--text-secondary); font-size: 0.9rem;">Baixe o arquivo tratado e formatado</div></div>', unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -689,41 +657,30 @@ if st.session_state.current_page == "dashboard":
 # ============================================================
 
 elif st.session_state.current_page == "processamento":
-    st.markdown("""
-        <div class="section">
-            <div class="section-title">
-                <span class="section-title-icon">⚡</span>
-                Processamento de Extrato
-            </div>
-    """, unsafe_allow_html=True)
+    st.markdown('<div class="section">', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"><span class="section-title-icon">⚡</span> Processamento de Extrato</div>', unsafe_allow_html=True)
 
-    # Estado 1: Upload
     if not st.session_state.processing_done:
+        # Estado 1: Upload
         st.markdown('<div class="upload-zone">', unsafe_allow_html=True)
         uploaded_file = st.file_uploader(
             "Selecione o arquivo Excel (.xlsx)",
             type=["xlsx"],
-            help="O arquivo deve conter as colunas: Data, HISTORICO, Valor, HISTORICO DE LANÇAMENTO",
+            help="Colunas: Data, HISTORICO, Valor, HISTORICO DE LANÇAMENTO",
             label_visibility="collapsed"
         )
         st.markdown('</div>', unsafe_allow_html=True)
 
-        if uploaded_file is not None:
+        if uploaded_file:
             st.session_state.uploaded_file = uploaded_file
-            st.success(f"✅ Arquivo selecionado: **{uploaded_file.name}**")
+            st.success(f"✅ Arquivo: **{uploaded_file.name}**")
 
-        # Botão processar
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            processar_btn = st.button(
-                "⚡ PROCESSAR ARQUIVO",
-                type="primary",
-                disabled=uploaded_file is None,
-                use_container_width=True
-            )
+            processar_btn = st.button("⚡ PROCESSAR ARQUIVO", type="primary", disabled=uploaded_file is None, use_container_width=True)
 
-        if processar_btn and uploaded_file is not None:
-            with st.spinner("⏳ Processando arquivo..."):
+        if processar_btn and uploaded_file:
+            with st.spinner("⏳ Processando..."):
                 df_final, stats, error = processar_arquivo(uploaded_file)
 
             if error:
@@ -734,115 +691,54 @@ elif st.session_state.current_page == "processamento":
                 st.session_state.processing_done = True
                 st.rerun()
 
-    # Estado 2: Sucesso e Pré-visualização
     else:
+        # Estado 2: Sucesso
         stats = st.session_state.stats
         df_final = st.session_state.df_final
 
-        # Badge de sucesso
-        st.markdown('<div class="status-badge success">✅ Processamento concluído com sucesso!</div>', unsafe_allow_html=True)
-
+        st.markdown('<div class="status-badge success">✅ Processamento concluído!</div>', unsafe_allow_html=True)
         st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
-        # Cards de Estatística (Signature Style)
-        st.markdown("### 📊 Resumo do Processamento")
+        # Cards de Estatística
+        st.markdown("### 📊 Resumo")
 
         col1, col2, col3, col4 = st.columns(4)
-
         with col1:
-            st.markdown(f"""
-                <div class="card card-signature">
-                    <div class="card-number">{stats['linhas_originais']}</div>
-                    <div class="card-label">Linhas Originais</div>
-                </div>
-            """, unsafe_allow_html=True)
-
+            st.markdown(f'<div class="card card-signature"><div class="card-number">{stats["linhas_originais"]}</div><div class="card-label">Originais</div></div>', unsafe_allow_html=True)
         with col2:
-            st.markdown(f"""
-                <div class="card card-signature success">
-                    <div class="card-number" style="color: var(--secondary);">{stats['agrupados']}</div>
-                    <div class="card-label">PAY IN/OUT Agrupados</div>
-                </div>
-            """, unsafe_allow_html=True)
-
+            st.markdown(f'<div class="card card-signature success"><div class="card-number">{stats["agrupados"]}</div><div class="card-label">Agrupados</div></div>', unsafe_allow_html=True)
         with col3:
-            st.markdown(f"""
-                <div class="card card-signature warning">
-                    <div class="card-number" style="color: var(--warning);">{stats['outros_mantidos']}</div>
-                    <div class="card-label">Outros Mantidos</div>
-                </div>
-            """, unsafe_allow_html=True)
-
+            st.markdown(f'<div class="card card-signature warning"><div class="card-number">{stats["outros_mantidos"]}</div><div class="card-label">Outros</div></div>', unsafe_allow_html=True)
         with col4:
-            st.markdown(f"""
-                <div class="card card-signature">
-                    <div class="card-number">{stats['total_saida']}</div>
-                    <div class="card-label">Total no Arquivo</div>
-                </div>
-            """, unsafe_allow_html=True)
+            st.markdown(f'<div class="card card-signature"><div class="card-number">{stats["total_saida"]}</div><div class="card-label">Total</div></div>', unsafe_allow_html=True)
 
-        # Métricas financeiras adicionais
+        # Métricas financeiras
         col5, col6, col7 = st.columns(3)
-
         with col5:
-            st.markdown(f"""
-                <div class="card card-signature success">
-                    <div class="card-number" style="color: var(--secondary); font-size: 1.8rem;">
-                        R$ {stats['total_payin']:,.2f}
-                    </div>
-                    <div class="card-label">Total Pay In</div>
-                </div>
-            """, unsafe_allow_html=True)
-
+            st.markdown(f'<div class="card card-signature success"><div class="card-number" style="font-size: 1.8rem;">R$ {stats["total_payin"]:,.2f}</div><div class="card-label">Pay In</div></div>', unsafe_allow_html=True)
         with col6:
-            st.markdown(f"""
-                <div class="card card-signature error">
-                    <div class="card-number" style="color: var(--error); font-size: 1.8rem;">
-                        R$ {abs(stats['total_payout']):,.2f}
-                    </div>
-                    <div class="card-label">Total Pay Out</div>
-                </div>
-            """, unsafe_allow_html=True)
-
+            st.markdown(f'<div class="card card-signature error"><div class="card-number" style="font-size: 1.8rem; background: linear-gradient(135deg, var(--danger), #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">R$ {abs(stats["total_payout"]):,.2f}</div><div class="card-label">Pay Out</div></div>', unsafe_allow_html=True)
         with col7:
-            saldo_color = "var(--secondary)" if stats['saldo'] >= 0 else "var(--error)"
-            st.markdown(f"""
-                <div class="card card-signature {'success' if stats['saldo'] >= 0 else 'error'}">
-                    <div class="card-number" style="color: {saldo_color}; font-size: 1.8rem;">
-                        R$ {stats['saldo']:,.2f}
-                    </div>
-                    <div class="card-label">Saldo</div>
-                </div>
-            """, unsafe_allow_html=True)
+            saldo_cls = 'success' if stats['saldo'] >= 0 else 'error'
+            st.markdown(f'<div class="card card-signature {saldo_cls}"><div class="card-number" style="font-size: 1.8rem;">R$ {stats["saldo"]:,.2f}</div><div class="card-label">Saldo</div></div>', unsafe_allow_html=True)
 
         st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
-        # Preview dos dados
-        st.markdown("### 👀 Pré-visualização dos Dados")
-        st.dataframe(
-            df_final.head(20),
-            use_container_width=True,
-            hide_index=True,
-            column_config={
-                "Data": st.column_config.DateColumn("Data"),
-                "HISTORICO": st.column_config.TextColumn("Histórico"),
-                "Valor": st.column_config.NumberColumn("Valor", format="%.2f"),
-                "HISTORICO DE LANÇAMENTO": st.column_config.TextColumn("Hist. Lançamento"),
-            }
-        )
+        # Preview
+        st.markdown("### 👀 Pré-visualização")
+        st.dataframe(df_final.head(20), use_container_width=True, hide_index=True)
         if len(df_final) > 20:
             st.caption(f"Mostrando 20 de {len(df_final)} linhas")
 
         st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 
-        # Estado 3: Download
-        st.markdown("### 📥 Download do Arquivo Tratado")
-
+        # Download
+        st.markdown("### 📥 Download")
         excel_output = formatar_excel(df_final)
         nome_arquivo = st.session_state.uploaded_file.name.replace(".xlsx", "_tratado.xlsx")
 
         st.download_button(
-            label="📥 BAIXAR ARQUIVO EXCEL TRATADO",
+            label="📥 BAIXAR EXCEL TRATADO",
             data=excel_output,
             file_name=nome_arquivo,
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -850,9 +746,7 @@ elif st.session_state.current_page == "processamento":
             use_container_width=True
         )
 
-        # Botão para novo processamento
-        st.markdown("")
-        if st.button("🔄 PROCESSAR NOVO ARQUIVO", type="secondary", use_container_width=True):
+        if st.button("🔄 NOVO ARQUIVO", type="secondary", use_container_width=True):
             st.session_state.processing_done = False
             st.session_state.uploaded_file = None
             st.session_state.df_final = None
@@ -868,6 +762,6 @@ elif st.session_state.current_page == "processamento":
 st.markdown("""
     <div class="app-footer">
         <div class="divider"></div>
-        <p>💎 Extrato Genial • The Precise Curator • Automatização inteligente de extratos</p>
+        <p>💎 Extrato Genial • Automatização Inteligente</p>
     </div>
 """, unsafe_allow_html=True)
