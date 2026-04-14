@@ -10,9 +10,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from io import BytesIO
-import re
-import unicodedata
-import traceback
+from datetime import date
 
 # ============================================================
 # CONSTANTES
@@ -427,20 +425,6 @@ DESIGN_TOKENS = """
 # FUNÇÕES AUXILIARES
 # ============================================================
 
-def _normalize_text(value: object) -> str:
-    if value is None:
-        return ""
-    text = str(value).strip()
-    text = unicodedata.normalize("NFKD", text)
-    text = "".join(ch for ch in text if not unicodedata.combining(ch))
-    text = text.upper()
-    text = re.sub(r"\s+", " ", text)
-    return text
-
-
-_TARGETS_NORM = {_normalize_text(t) for t in TARGETS}
-
-
 def formatar_excel(df_final):
     """Gera o arquivo Excel formatado."""
     wb = Workbook()
@@ -514,35 +498,20 @@ def processar_arquivo(uploaded_file):
         colunas_obrigatorias = ["Data", "HISTORICO", "Valor", "HISTORICO DE LANÇAMENTO"]
         colunas_faltando = [col for col in colunas_obrigatorias if col not in df.columns]
         if colunas_faltando:
-            return None, None, f"❌ Colunas faltando: {', '.join(colunas_faltando)}", None
+            return None, None, f"❌ Colunas faltando: {', '.join(colunas_faltando)}"
 
-        df["HISTORICO"] = df["HISTORICO"].astype(str).str.strip()
-        df["HISTORICO_NORM"] = df["HISTORICO"].map(_normalize_text)
+        df["HISTORICO"] = df["HISTORICO"].str.strip()
+        df["Data"] = pd.to_datetime(df["Data"]).dt.date
 
-        df["Data"] = pd.to_datetime(df["Data"], errors="coerce").dt.date
-        if df["Data"].isna().any():
-            invalid = int(df["Data"].isna().sum())
-            return None, None, f"❌ A coluna **Data** tem {invalid} valor(es) inválido(s).", None
-
-        df["Valor"] = pd.to_numeric(df["Valor"], errors="coerce")
-        if df["Valor"].isna().any():
-            invalid = int(df["Valor"].isna().sum())
-            return None, None, f"❌ A coluna **Valor** tem {invalid} valor(es) inválido(s).", None
-
-        df_targets = df[df["HISTORICO_NORM"].isin(_TARGETS_NORM)].copy()
-        df_others = df[~df["HISTORICO_NORM"].isin(_TARGETS_NORM)].copy()
-
-        # Canonicaliza o histórico dos targets para manter consistência no arquivo final
-        norm_to_canonical = {_normalize_text(t): t for t in TARGETS}
-        df_targets["HISTORICO"] = df_targets["HISTORICO_NORM"].map(norm_to_canonical).fillna(df_targets["HISTORICO"])
+        df_targets = df[df["HISTORICO"].isin(TARGETS)].copy()
+        df_others = df[~df["HISTORICO"].isin(TARGETS)].copy()
 
         grouped = df_targets.groupby(["Data", "HISTORICO"], sort=False)["Valor"].sum().reset_index()
         grouped["HISTORICO DE LANÇAMENTO"] = grouped["HISTORICO"]
 
         df_others_clean = df_others[colunas_obrigatorias].copy()
         df_final = pd.concat([df_others_clean, grouped], ignore_index=True)
-        # Ordenação ajuda leitura do “tratado” (mantém comportamento atual do app)
-        df_final = df_final.sort_values(["Data", "HISTORICO"], kind="stable").reset_index(drop=True)
+        df_final = df_final.sort_values(["Data", "HISTORICO"]).reset_index(drop=True)
 
         total_payin = df_final[df_final["HISTORICO"] == TARGET_PAYIN]["Valor"].sum()
         total_payout = df_final[df_final["HISTORICO"] == TARGET_PAYOUT]["Valor"].sum()
@@ -558,11 +527,10 @@ def processar_arquivo(uploaded_file):
             "saldo": saldo,
         }
 
-        return df_final, stats, None, None
+        return df_final, stats, None
 
     except Exception as e:
-        debug = "".join(traceback.format_exception(type(e), e, e.__traceback__))
-        return None, None, "❌ Erro ao processar o arquivo.", debug
+        return None, None, "❌ Erro ao processar o arquivo."
 
 
 # ============================================================
@@ -713,13 +681,10 @@ elif st.session_state.current_page == "processamento":
 
         if processar_btn and uploaded_file:
             with st.spinner("⏳ Processando..."):
-                df_final, stats, error, debug = processar_arquivo(uploaded_file)
+                df_final, stats, error = processar_arquivo(uploaded_file)
 
             if error:
                 st.error(error)
-                if debug:
-                    with st.expander("Detalhes técnicos (para suporte)"):
-                        st.code(debug)
             else:
                 st.session_state.df_final = df_final
                 st.session_state.stats = stats
