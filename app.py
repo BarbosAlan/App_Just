@@ -96,11 +96,41 @@ def processar_arquivo(uploaded_file):
     try:
         df = pd.read_excel(uploaded_file)
 
+        # --- NORMALIZAÇÃO DE COLUNAS ---
+        # 1. Remove espaços em branco
+        df.columns = [str(c).strip() for c in df.columns]
+        
+        # 2. Mapeamento para garantir que o script encontre as colunas independente do case
+        mapeamento = {
+            "DATA": "Data",
+            "HISTORICO": "HISTORICO",
+            "VALOR": "Valor",
+            "HISTORICO DE LANÇAMENTO": "HISTORICO DE LANÇAMENTO"
+        }
+        
+        available_cols_upper = {c.upper(): c for c in df.columns}
+        renames = {}
+        
+        for col_upper_esperada, nome_alvo in mapeamento.items():
+            # Busca exata (ignore case)
+            if col_upper_esperada in available_cols_upper:
+                renames[available_cols_upper[col_upper_esperada]] = nome_alvo
+            # Busca aproximada para o histórico de lançamento (comum dar erro de Ç ou acento)
+            elif col_upper_esperada == "HISTORICO DE LANÇAMENTO":
+                for av_upper, av_orig in available_cols_upper.items():
+                    if "LAN" in av_upper and "HIST" in av_upper:
+                        renames[av_orig] = nome_alvo
+                        break
+        
+        df = df.rename(columns=renames)
+        # -------------------------------
+
         # Valida colunas obrigatórias
         colunas_obrigatorias = ["Data", "HISTORICO", "Valor", "HISTORICO DE LANÇAMENTO"]
         colunas_faltando = [col for col in colunas_obrigatorias if col not in df.columns]
         if colunas_faltando:
             st.error(f"❌ Colunas faltando no arquivo: {', '.join(colunas_faltando)}")
+            st.info(f"Colunas encontradas no seu arquivo: {', '.join(df.columns)}")
             return None, None
 
         df["HISTORICO"] = df["HISTORICO"].str.strip()
